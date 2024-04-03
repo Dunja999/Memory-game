@@ -68,6 +68,30 @@ public class serverThread extends Thread{
 			drugiIgracInput.close();
 			drugiIgracOutput.close();
 			
+			String line="";
+			
+			while(true) {
+				
+				line = prviIgracInput.readLine();
+				while(!"pause".equals(line) && !"end".equals(line)) {
+					drugiIgracOutput.println(line);
+					line = prviIgracInput.readLine();
+				}
+				drugiIgracOutput.println(line);
+				if("end".equals(line)) {
+					break;
+				}
+				line = drugiIgracInput.readLine();
+				while(!"pause".equals(line) && !"end".equals(line)) {
+					prviIgracOutput.println(line);
+					line = drugiIgracInput.readLine();
+				}
+				prviIgracOutput.println(line);
+				if("end".equals(line)) {
+					break;
+				}
+				
+			}	
 			
 	} catch (SocketException e) {
 		
