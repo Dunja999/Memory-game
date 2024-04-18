@@ -52,7 +52,16 @@ public class Klijent {
 			e.printStackTrace();
 		}
 	}
+	public void posaljiPoruku(String poruka) {
+		output.println(poruka);
+	}
 	
+	public void posaljiPozicije(int prvaPozicija, int drugaPozicija) {
+
+		System.out.println(prvaPozicija + ", " + drugaPozicija);
+		output.println(prvaPozicija + "," + drugaPozicija );
+		
+	}
 	
 
 }
