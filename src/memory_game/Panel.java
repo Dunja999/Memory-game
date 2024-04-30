@@ -52,4 +52,54 @@ public class Panel {
             
 		}
 	}
+	private class Plocica extends StackPane {
+		
+		int pozicija;
+	    ImageView slika;
+
+		public Plocica(ImageView slika) {
+			this.slika = slika;
+			this.pozicija = pozicija;
+			Rectangle border = new Rectangle(120, 120, Color.BLUE);
+			setAlignment(Pos.CENTER);
+			getChildren().addAll(this.slika, border);
+			
+			setOnMouseClicked(new EventHandler<MouseEvent>() {
+			    @Override
+			    public void handle(MouseEvent event) {
+			        handleMouseClick(event);
+			    }
+			});
+		}
+			public void handleMouseClick(MouseEvent event) {
+				
+				if (isOpen() || brojKlikova == 0) {
+					return;
+				}
+				brojKlikova--;
+				
+				if(selected == null) {
+					selected = this;
+					root.setDisable(true);
+					open(new Runnable() {
+					    @Override
+					    public void run() {
+					        root.setDisable(false);
+					    }
+					});
+					
+				}
+				else {
+					open(() -> {
+					
+					        if (!imaIstuVrijednost(selected)) {
+					            selected.close(0.5);
+					            this.close(0.5);
+					            klijent.posaljiPozicije(this.pozicija, selected.pozicija, "false");
+					            klijent.posaljiPoruku("pause");
+					            endTurn = true;
+					           
+					        }
+	
 }
+					     }
