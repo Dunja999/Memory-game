@@ -103,3 +103,25 @@ public class Panel {
 	
 }
 					     }
+
+public boolean imaIstuVrijednost(Plocica druga) {	
+	
+return slika.getImage().equals(druga.slika.getImage());
+	}
+				
+public boolean isOpen() {
+	
+return slika.getOpacity() == 1;
+	}
+	
+public void open(Runnable action) {
+	
+		
+}
+	
+public void close(double seconds) {
+		
+}
+	
+
+}
