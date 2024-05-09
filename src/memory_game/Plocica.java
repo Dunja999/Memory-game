@@ -50,9 +50,8 @@ public Plocica(ImageView slika) {
 			
 		}
 		else {
-			open(new Runnable() {
-
-			    public void run() {
+		     open(() -> {
+			     
 			        if (!imaIstuVrijednost(selected)) {
 			            selected.close(0.5);
 			            Plocica.this.close(0.5);
@@ -61,10 +60,49 @@ public Plocica(ImageView slika) {
 			            endTurn = true;
 			            
 			        }
-			    }
-			});
-		}
-	}
+			     else {
+				     
+				   klijent.bodovi++;
+				   bodovi.setText(klijent.getUsername() + ":" + klijent.bodovi);
+				   System.out.println(this.pozicija);
+				   System.out.println(selected.pozicija);
+				   klijent.posaljiPozicije(this.pozicija, selected.pozicija, "true");
+				   ukloniKarte(this.pozicija + "," + selected.pozicija + "," + "true");
+				   if(preostaleKarte == 0) {
+				   klijent.posaljiPoruku("Kraj!");
+				   klijent.closeResourses();
+				   return;
+				}
+								
+				}
+					        
+				       selected = null;
+				       brojKlikova=2;
+					        
+					if(endTurn) {
+					root.setDisable(true);
+					new Thread( () -> {
+					try {
+					String linija = klijent.readString();
+					while(!"pauza".equals(linija) && !"kraj".equals(linija)) {
+					String selektovaneKarte = linija;
+					Platform.runLater(() -> prikaziProtivnikovePoteze(selektovaneKarte));
+					linija = klijent.readString();
+					        			
+					}
+					endTurn = false;
+					   }
+					catch(IOException e) {
+				        e.printStackTrace();
+					}
+					
+		                            }
+			             ).start();
+		                               }     
+					         });
+
+				        }
+			              }
 	
 	public boolean imaIstuVrijednost(Plocica druga) {
 		
