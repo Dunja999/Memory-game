@@ -138,7 +138,7 @@ public class Panel {
 					            selected.close(0.5);
 					            this.close(0.5);
 					            klijent.posaljiPozicije(this.pozicija, selected.pozicija, "false");
-					            klijent.posaljiPoruku("pause");
+					            klijent.posaljiPoruku("pauza");
 					            endTurn = true;
 					           
 					        }
