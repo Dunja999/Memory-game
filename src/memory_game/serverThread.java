@@ -57,8 +57,8 @@ public class serverThread extends Thread{
 			drugiIgracOutput.println("start");
 			drugiIgracOutput.println(randomPozicije);
 			
-			drugiIgracOutput.println("pause");
-			prviIgracOutput.println("play");
+			drugiIgracOutput.println("pauza");
+			prviIgracOutput.println("igraj");
 			
 			prviIgrac.close();
 			prviIgracInput.close();
@@ -68,26 +68,26 @@ public class serverThread extends Thread{
 			drugiIgracInput.close();
 			drugiIgracOutput.close();
 			
-			String line="";
+			String linija = "";
 			
 			while(true) {
 				
-				line = prviIgracInput.readLine();
-				while(!"pause".equals(line) && !"end".equals(line)) {
-					drugiIgracOutput.println(line);
-					line = prviIgracInput.readLine();
+				linija = prviIgracInput.readLine();
+				while(!"pauza".equals(linija) && !"kraj".equals(linija)) {
+					drugiIgracOutput.println(linija);
+					linija = prviIgracInput.readLine();
 				}
-				drugiIgracOutput.println(line);
-				if("end".equals(line)) {
+				drugiIgracOutput.println(linija);
+				if("kraj".equals(linija)) {
 					break;
 				}
-				line = drugiIgracInput.readLine();
-				while(!"pause".equals(line) && !"end".equals(line)) {
-					prviIgracOutput.println(line);
-					line = drugiIgracInput.readLine();
+				linija = drugiIgracInput.readLine();
+				while(!"pauza".equals(linija) && !"kraj".equals(linija)) {
+					prviIgracOutput.println(linija);
+					linija = drugiIgracInput.readLine();
 				}
-				prviIgracOutput.println(line);
-				if("end".equals(line)) {
+				prviIgracOutput.println(linija);
+				if("kraj".equals(linija)) {
 					break;
 				}
 				
