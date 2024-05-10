@@ -50,8 +50,50 @@ public class Panel {
             slika.setFitWidth(100);
             plocice.add(new Plocica(slika));
             
-		}
+        }
+	return root;
 	}
+
+	public void ukloniKarte (String pozicije) {
+		String [] dijelovi = pozicije.split(",");
+		int prvaPozicija = Integer.parseInt(dijelovi[0]);
+		int drugaPozicija = Integer.parseInt(dijelovi[1]);
+		boolean ukloni = Boolean.parseBoolean(dijelovi[2]);
+		System.out.println("Ukloni: " + ukloni);
+		if(ukloni) {
+			root.getChildren().remove(prvaPozicija);
+			root.getChildren().add(prvaPozicija, new Rectangle());
+			root.getChildren().remove(drugaPozicija);
+			root.getChildren().add(drugaPozicija, new Rectangle());
+			preostaleKarte --;
+			
+		}
+		
+		
+	}
+	
+	public void prikaziProtivnikovePoteze (String pozicije) {
+		String [] dijelovi = pozicije.split(",");
+		int prvaPozicija = Integer.parseInt(dijelovi[0]);
+		int drugaPozicija = Integer.parseInt(dijelovi[1]);
+		boolean ukloni = Boolean.parseBoolean(dijelovi[2]);
+		
+		plocice.get(prvaPozicija).show(() -> {
+		  root.setDisable(false);
+		  if(ukloni) {
+			  root.setDisable(true);
+			  ukloniKarte(pozicije);
+			  if(preostaleKarte == 0) {
+				  klijent.posaljiPoruku("kraj");
+				  klijent.closeResourses();
+			  }
+		  }
+		});
+		plocice.get(prvaPozicija).show(() -> {});
+		
+		
+	}
+	
 	private class Plocica extends StackPane {
 		
 		int pozicija;
