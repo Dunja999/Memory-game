@@ -85,3 +85,70 @@ public class gui extends Application {
 		stage.setTitle("Igra memorije");
 		stage.setResizable(false);
 		stage.show();
+                igraj.setOnAction(e -> {
+			if (ime.getText().isEmpty()) {
+				greska.setText("Unesite korisnicko ime!");
+				greska.setManaged(true);
+				greska.setVisible(true);
+				return;
+			}
+			greska.setText("");
+			username = ime.getText();
+			klijent.setUsername(username);
+			klijent.sendUsername();
+
+			new Thread(() -> {
+				try {
+					pozicije = klijent.run();
+					Panel panel = new Panel(klijent);
+
+					VBox v = new VBox(10);
+					v.setStyle("-fx-background-color: rosybrown;");
+					Platform.runLater(() -> {
+
+						v.getChildren().addAll(panel.createContent(pozicije));
+						Scene s = new Scene(v);
+						stage.setScene(s);
+						stage.centerOnScreen();
+						stage.show();
+						stage.setResizable(true);
+
+					});
+					
+					String linija = klijent.readString();
+					if ("pauza".equals(linija)) {
+
+						Platform.runLater(() -> v.setDisable(true));
+						linija = klijent.readString();
+						while (!"pauza".equals(linija) && !"kraj".equals(linija)) {
+
+							String selektovaneKarte = linija;
+							Platform.runLater(() -> panel.prikaziProtivnikovePoteze(selektovaneKarte));
+
+							linija = klijent.readString();
+
+						}
+						Platform.runLater(() -> v.setDisable(false));
+
+					}
+
+				} catch (IOException e2) {
+
+					e2.printStackTrace();
+				}
+			}).start();
+
+			igraj.setDisable(true);
+			ime.setDisable(true);
+			greska.setText("Cekanje dok se drugi igrac ne pridruzi...");
+			greska.setManaged(true);
+			greska.setVisible(true);
+
+		});
+	}
+
+	public static void main(String[] args) {
+		launch(args);
+	}
+}
+
