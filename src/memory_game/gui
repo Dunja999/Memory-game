@@ -1,0 +1,87 @@
+package memory_game;
+
+import java.io.IOException;
+import java.util.List;
+
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
+
+public class gui extends Application {
+
+	private Stage stage;
+	private Scene scene;
+	private Klijent klijent;
+	private String username;
+	private String pozicije;
+
+	@Override
+	public void start(Stage stage) {
+		// TODO Auto-generated method stub
+		klijent = new Klijent(this);
+		this.stage = stage;
+
+		VBox start = new VBox(60);
+		start.setPrefWidth(500);
+		start.setPrefHeight(300);
+		start.setAlignment(Pos.CENTER);
+
+		Label unos = new Label("Unesite korisnicko ime: ");
+		unos.setFont(Font.font("Ravie", FontWeight.BOLD, 20));
+		unos.setTextFill(Color.WHITE);
+
+		TextField ime = new TextField();
+		ime.setMaxWidth(300);
+		ime.setMaxHeight(30);
+		ime.setFont(Font.font("Verdana", FontWeight.NORMAL, 15));
+		ime.setStyle("-fx-text-box-border: rosybrown ");
+
+		VBox box1 = new VBox(10);
+		box1.setPrefWidth(500);
+		box1.setPrefHeight(100);
+		box1.setAlignment(Pos.CENTER);
+		box1.getChildren().addAll(unos, ime);
+
+		Button igraj = new Button("IGRAJ");
+		igraj.setFont(Font.font("STENCIL", FontWeight.NORMAL, 20));
+		igraj.setTextFill(Color.DARKOLIVEGREEN);
+		igraj.setPrefSize(100, 60);
+		Circle circle = new Circle(50);
+		igraj.setShape(circle);
+
+		Label greska = new Label();
+		greska.setTextFill(Color.ROSYBROWN);
+		greska.setFont(Font.font("Pristina", FontWeight.NORMAL, 25));
+		greska.setManaged(false);
+		greska.setVisible(false);
+
+		VBox box2 = new VBox(10);
+		box2.setPrefWidth(500);
+		box2.setPrefHeight(100);
+		box2.setAlignment(Pos.CENTER);
+		box2.getChildren().addAll(igraj, greska);
+
+		start.getChildren().addAll(box1, box2);
+		start.setBackground(new Background(new BackgroundFill(Color.DARKSEAGREEN, null, null)));
+
+		scene = new Scene(start, 500, 500);
+		stage.setScene(scene);
+		stage.setTitle("Igra memorije");
+		stage.setResizable(false);
+		stage.show();
