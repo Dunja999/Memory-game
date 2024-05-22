@@ -179,7 +179,7 @@ public class Panel {
 			});
 			
 		} catch (NumberFormatException e) {
-			System.err.println("Neuspela konverzija stringa u broj ili boolean.");
+			System.err.println("Neuspjela konverzija stringa u broj ili boolean.");
 			return;
 		}
 	}
